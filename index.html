@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Tareas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .add-task {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .task-left {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .task input[type="checkbox"] {
+            margin-top: 6px;
+        }
+
+        .task-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .description {
+            color: #27ae60;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .task-actions button {
+            background: none;
+            border: none;
+            margin-left: 8px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .task-actions .view {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .task-actions .edit {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .task-actions .delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>📌 High Priority</h2>
+        <button class="add-task">+ Añadir Tarea</button>
+
+        <div class="task">
+            <div class="task-left">
+                <input type="checkbox">
+                <div class="task-text">
+                    <span class="title">Revisión de resultados Q3</span>
+                    <span class="description">El equipo financiero debe analizar los números antes del viernes.</span>
+                </div>
+            </div>
+            <div class="task-actions">
+                <button class="view">Ver</button>
+                <button class="edit">Editar</button>
+                <button class="delete">Eliminar</button>
+            </div>
+        </div>
+
+        <div class="task">
+            <div class="task-left">
+                <input type="checkbox">
+                <div class="task-text">
+                    <span class="title">Planificación Etapa 2</span>
+                    <span class="description">Reunión con Victor para definir detalles del proyecto fase 2.</span>
+                </div>
+            </div>
+            <div class="task-actions">
+                <button class="view">Ver</button>
+                <button class="edit">Editar</button>
+                <button class="delete">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
