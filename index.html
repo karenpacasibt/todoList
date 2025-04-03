@@ -19,10 +19,11 @@
         </div>
         <div class="task">
             <div class="task-left" id="registerTask">
-                <input type="checkbox">
+                <input type="checkbox" onchange="markTask(this)">
                 <div class="task-text">
                     <span class="title done">Revisión de resultados Q3</span>
-                    <span class="description done">El equipo financiero debe analizar los números antes del viernes.</span>
+                    <span class="description done">El equipo financiero debe analizar los números antes del
+                        viernes.</span>
                 </div>
             </div>
             <div class="task-actions">
@@ -45,22 +46,20 @@
 
             taskContainer.innerHTML = `
                 <div class="task-left">
-                    <input type="checkbox">
-                    <div class="task-text">
+                    <input type="checkbox" onchange="markTask(this)">
+                    <div class="task-text" id="completed">
                         <span class="title">${title}</span>
                         <span class="description">${description}</span>
                     </div>
                 </div>
                 <div class="task-actions">
                     <button class="view">Ver</button>
-                    <button class="edit">Editar</button>
+                    <button class="edit" onclick="taskEdit(this)">Editar</button>
                     <button class="delete" id="delete" onclick="deleteTask(this)">Eliminar</button>
                 </div>
             `;
 
             document.querySelector('.container').appendChild(taskContainer);
-
-            // Limpia los campos después de agregar
             document.getElementById("taskTitle").value = "";
             document.getElementById("taskDescription").value = "";
         }
@@ -69,8 +68,12 @@
             task.remove();
         }
 
-        function taskEdit(){
-            
+
+        function markTask(event) {
+            const padre = event.parentElement;
+            const contenido = padre.children[1];
+                contenido.children[0].style = 'text-decoration: line-through';
+                contenido.children[1].style = 'text-decoration: line-through';
         }
 
 
