@@ -97,3 +97,31 @@ h2 {
     background-color: #e74c3c;
     color: white;
 }
+
+.new-task-form {
+    margin: 20px 0;
+}
+
+.new-task-form input,
+.new-task-form textarea {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.btn-submit {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background-color: #218838;
+}
