@@ -11,15 +11,20 @@
 
     <div class="container">
         <h2>PROYECTO TODO LIST</h2>
-        <button class="add-task">+ Añadir Tarea</button>
-
+        <!-- NUEVA SECCIÓN de inputs -->
+        <div class="new-task-form">
+            <input type="text" id="new-title" placeholder="Title" />
+            <textarea id="new-description" rows="2" placeholder="Description"></textarea>
+            <button class="btn-submit" onclick="guardarTarea()">Agregar tarea</button>
+        </div>
         <div class="task">
-            <div class="task-left">
+            <div class="task-left" id="registerTask">
                 <input type="checkbox">
                 <div class="task-text">
                     <span class="title done">Revisión de resultados Q3</span>
-                    <span class="description done">El equipo financiero debe analizar los números antes del viernes.</span>
-                
+                    <span class="description done">El equipo financiero debe analizar los números antes del
+                        viernes.</span>
+
                 </div>
             </div>
             <div class="task-actions">
@@ -45,6 +50,14 @@
         </div>
     </div>
 
+    <script>
+        function modalTask() {
+            document.getElementById('modalTarea').style.display = 'block';
+        }
+        function cerrarModal() {
+            document.getElementById("modalTarea").style.display = "none";
+        }
+    </script>
 </body>
 
 </html>
