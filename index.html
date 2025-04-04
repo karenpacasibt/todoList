@@ -54,7 +54,7 @@
                 </div>
                 <div class="task-actions">
                     <button class="view">Ver</button>
-                    <button class="edit" onclick="taskEdit(this)">Editar</button>
+                    <button class="edit" onclick="editTask(this)">Editar</button>
                     <button class="delete" id="delete" onclick="deleteTask(this)">Eliminar</button>
                 </div>
             `;
@@ -72,10 +72,25 @@
         function markTask(event) {
             const padre = event.parentElement;
             const contenido = padre.children[1];
+            console.log(contenido);
+            
+            if (event.checked) {
                 contenido.children[0].style = 'text-decoration: line-through';
                 contenido.children[1].style = 'text-decoration: line-through';
+            } else {
+                contenido.children[0].style = 'text-decoration: none';
+                contenido.children[1].style = 'text-decoration: none';
+            }
         }
 
+        function editTask(event){
+            const task = event.parentElement.parentElement;
+            const title = task.querySelector('.title').textContent;
+            const description = task.querySelector('.description').textContent;
+            document.getElementById('taskTitle').value = title;
+            document.getElementById('taskDescription').value = description;
+            deleteTask(event);
+        }
 
     </script>
 </body>
