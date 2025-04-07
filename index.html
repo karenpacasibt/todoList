@@ -20,16 +20,16 @@
         <div class="task-container1">
             <div class="task">
                 <div class="task-left">
-                    <input type="checkbox" onchange="markTask(this)">
+                    <input type="checkbox" onchange=`markTask(${task.id})`>
                     <div class="task-text" id="completed">
                         <span class="title">${task.task}</span>
                         <span class="description">${task.description}</span>
                     </div>
                 </div>
                 <div class="task-actions">
-                    <button class="view" onclick="viewTask(this)">Ver</button>
-                    <button class="edit" onclick="editTask(this)">Editar</button>
-                    <button class="delete" id="delete" onclick="deleteTask(this)">Eliminar</button>
+                    <button class="view" onclick=`viewTask(${task.id})`>Ver</button>
+                    <button class="edit" onclick=`editTask(${task.id})`>Editar</button>
+                    <button class="delete" id="delete" onclick=`deleteTask(${task.id})`>Eliminar</button>
                 </div>
             </div>
         </div>
@@ -37,132 +37,112 @@
     </div>
 
     <script>
-        // function addTask() {
-        //     const title = document.getElementById('taskTitle').value;
-        //     const description = document.getElementById('taskDescription').value;
 
-        //     const taskContainer = document.createElement("div");
-        //     taskContainer.setAttribute("id");
-        //     taskContainer.classList.add("task");
+        let tasks = []
+        console.log('aqui comienza el script');
 
-        //     taskContainer.innerHTML = `
-        //         <div class="task-left">
-        //             <input type="checkbox" onchange="markTask(this)">
-        //             <div class="task-text" id="completed">
-        //                 <span class="title">${title}</span>
-        //                 <span class="description">${description}</span>
-        //             </div>
-        //         </div>
-        //         <div class="task-actions">
-        //             <button class="view" onclick="viewTask(this)">Ver</button>
-        //             <button class="edit" onclick="editTask(this)">Editar</button>
-        //             <button class="delete" id="delete" onclick="deleteTask(this)">Eliminar</button>
-        //         </div>
-        //     `;
+        try {
+            tasks = JSON.parse(localStorage.getItem('tasks'));
+            tasks = Array.isArray(tasks) ? tasks : [];
+        } catch (e) {
+            tasks = [];
+        }
+        
+        //console.log('paso uno',tasks);
 
-        //     document.querySelector('.container').appendChild(taskContainer);
-        //     document.getElementById("taskTitle").value = "";
-        //     document.getElementById("taskDescription").value = "";
-        // }
-        // function deleteTask(event) {
-        //     const task = event.parentElement.parentElement;
-        //     task.remove();
-        // }
+        function save() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
 
-        // function markTask(event) {
-        //     const padre = event.parentElement;
-        //     const contenido = padre.children[1];
-        //     console.log(contenido);
+        function generateId() {
+            const id = Math.floor(Math.random() * 1000) + 1;
 
-        //     if (event.checked) {
-        //         contenido.children[0].style = 'text-decoration: line-through';
-        //         contenido.children[1].style = 'text-decoration: line-through';
-        //     } else {
-        //         contenido.children[0].style = 'text-decoration: none';
-        //         contenido.children[1].style = 'text-decoration: none';
-        //     }
-        // }
-
-        // function editTask(event){
-        //     const task = event.parentElement.parentElement;
-        //     const title = task.querySelector('.title').textContent;
-        //     const description = task.querySelector('.description').textContent;
-        //     document.getElementById('taskTitle').value = title;
-        //     document.getElementById('taskDescription').value = description;   
-        //     deleteTask(event);
-        // }
-
-        // function viewTask(event){
-        //     const task = event.parentElement.parentElement;
-        //     console.log(task);
-
-        //     let ventana = open();
-        // }
-
-        let tasks = [
-            { task: "Comprar alimentos", description: "Ir al supermercado para comprar comida y productos básicos.", status: true },
-            { task: "Lavar la ropa", description: "Hacer una carga de ropa en la lavadora y tenderla para secar.", status: false },
-            { task: "Preparar presentación", description: "Crear diapositivas para una reunión de trabajo o proyecto escolar.", status: true },
-            { task: "Leer un libro", description: "Dedicar tiempo para avanzar en la lectura de una novela o ensayo.", status: false }
-        ];
-
-        function addId(){
-            const id = Math.floor(Math.random()*1000)+1;
             return id;
         }
+        function generateUnusedId() {
+            let id = generateId()
+            if (tasks.some(task => task.id === id)) {
+                id = generateUnusedId()
+            }
+            return id
+        }
+
         function addTask() {
             const titulo = document.getElementById('taskTitle').value;
             const descripction = document.getElementById('taskDescription').value;
-            const id = addId();
+            const id = generateUnusedId();
             let task = { id: id, task: titulo, description: descripction, status: false };
             tasks.push(task);
             console.log(task);
             render();
+
             cleanForm();
+            save();
         }
+
         function cleanForm() {
             document.getElementById("taskTitle").value = "";
             document.getElementById("taskDescription").value = "";
         }
+
+        function markTask(id, checkbox) {
+            const task = tasks.find(t => t.id === id)
+            if (id.checked) {
+                contenido.children[0].style = 'text-decoration: line-through';
+                contenido.children[1].style = 'text-decoration: line-through';
+            } else {
+                contenido.children[0].style = 'text-decoration: none';
+                contenido.children[1].style = 'text-decoration: none';
+            }
+            save();
+        }
+
         function render() {
             document.querySelector('.task-container1').innerHTML = '';
             for (let task of tasks) {
                 const taskContainer = document.createElement("div");
-                //taskContainer.setAttribute("id","");
                 taskContainer.classList.add("task");
 
                 taskContainer.innerHTML = `
                     <div class="task-left">
                         <input type="checkbox" onchange="markTask(this)" ${task.status ? 'checked' : ''}>
+                        <span class="id">${task.id}</span>
                         <div class="task-text" id="completed">
                             <span class="title">${task.task}</span>
                             <span class="description">${task.description}</span>
                         </div>
                     </div>
                     <div class="task-actions">
-                        <button class="view" onclick="viewTask(this)">Ver</button>
-                        <button class="edit" onclick="editTask(this)">Editar</button>
-                        <button class="delete" id="delete" onclick="deleteTask('${task.task}')">Eliminar</button>
+                        <button class="view" onclick="viewTask(${task.id})">Ver</button>
+                    <button class="edit" onclick="editTask(${task.id})">Editar</button>
+                    <button class="delete" id="delete" onclick="deleteTask(${task.id})">Eliminar</button>
                     </div>
                 `;
 
                 document.querySelector('.task-container1').appendChild(taskContainer);
             }
+
+            save();
         }
 
         //adiciona
         function deleteTask(id) {
-            tasks = tasks.filter((e) => e.task != taskName);
+            tasks = tasks.filter((e) => e.id != id);
             render();
+            save();
         }
 
-        function editTask(id){
-            const task = event.parentElement.parentElement;
-            const title = task.querySelector('.title').textContent;
-            const description = task.querySelector('.description').textContent;
-            document.getElementById('taskTitle').value = title;
-            document.getElementById('taskDescription').value = description;            
-            deleteTask(title);
+        function editTask(id) {
+            const task = tasks.find(t => t.id === id)
+            document.getElementById('taskTitle').value = task.task;
+            document.getElementById('taskDescription').value = task.description;
+            deleteTask(id);
+            save();
+        }
+
+        function viewTask(id) {
+            const task = tasks.find(t => t.id === id)
+            alert(`TAREA: ${task.task}, DESCRIPCION: ${task.description}`);
         }
         render();
     </script>
