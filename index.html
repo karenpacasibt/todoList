@@ -106,15 +106,21 @@
             { task: "Leer un libro", description: "Dedicar tiempo para avanzar en la lectura de una novela o ensayo.", status: false }
         ];
 
+        function addId(){
+            const id = Math.floor(Math.random()*1000)+1;
+            return id;
+        }
         function addTask() {
             const titulo = document.getElementById('taskTitle').value;
             const descripction = document.getElementById('taskDescription').value;
-            let task = { task: titulo, description: descripction, status: false };
+            const id = addId();
+            let task = { id: id, task: titulo, description: descripction, status: false };
             tasks.push(task);
+            console.log(task);
             render();
             cleanForm();
         }
-        function cleanForm(){
+        function cleanForm() {
             document.getElementById("taskTitle").value = "";
             document.getElementById("taskDescription").value = "";
         }
@@ -144,12 +150,20 @@
             }
         }
 
-        function deleteTask(taskName){
-            tasks = tasks.filter((e) =>e.task!=taskName);
-            render();            
+        //adiciona
+        function deleteTask(id) {
+            tasks = tasks.filter((e) => e.task != taskName);
+            render();
         }
 
-        
+        function editTask(id){
+            const task = event.parentElement.parentElement;
+            const title = task.querySelector('.title').textContent;
+            const description = task.querySelector('.description').textContent;
+            document.getElementById('taskTitle').value = title;
+            document.getElementById('taskDescription').value = description;            
+            deleteTask(title);
+        }
         render();
     </script>
 </body>
